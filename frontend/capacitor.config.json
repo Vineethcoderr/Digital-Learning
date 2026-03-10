@@ -9,7 +9,9 @@
       "*.youtube.com",
       "*.youtu.be",
       "*.googlevideo.com",
-      "*.google.com"
+      "*.google.com",
+      "*.cloudinary.com",
+      "res.cloudinary.com"
     ]
   },
   "android": {

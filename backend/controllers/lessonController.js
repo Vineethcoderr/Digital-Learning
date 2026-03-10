@@ -1,4 +1,6 @@
 const Lesson = require('../models/Lesson');
+const { createNotification } = require('./notificationController');
+const { getIO } = require('../socketInstance');
 
 // @desc    Get all lessons (with filters)
 const getLessons = async (req, res) => {
@@ -16,7 +18,7 @@ const getLessons = async (req, res) => {
     }
     try {
         const { subject, grade, language } = req.query;
-        const filter = { isPublished: true };
+        const filter = {};
         if (subject) filter.subject = subject;
         if (grade) filter.grade = grade;
         if (language) filter.language = language;
@@ -46,6 +48,23 @@ const createLesson = async (req, res) => {
     }
     try {
         const lesson = await Lesson.create({ ...req.body, createdBy: req.user?.userId || req.body.createdBy });
+
+        // Create notification for new lesson
+        const notification = await createNotification({
+            title: 'New Lesson Published',
+            message: `"${lesson.title}" has been added to ${lesson.subject || 'your course'}`,
+            type: 'lesson',
+            referenceId: lesson._id.toString(),
+            createdBy: req.user?.userId || req.body.createdBy,
+            createdByName: req.body.createdByName || 'Teacher',
+            targetRole: 'all',
+        });
+        // Broadcast real-time notification to all connected clients
+        const io = getIO();
+        if (io && notification) {
+            io.emit('notification:new', notification.toObject());
+        }
+
         res.status(201).json(lesson);
     } catch (error) {
         res.status(400).json({ message: 'Invalid lesson data', error: error.message });
