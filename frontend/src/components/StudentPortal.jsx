@@ -117,6 +117,55 @@ export default function StudentPortal({ user }) {
         return url;
     };
 
+    // Hydrate local progress state from authenticated user's backend profile
+    useEffect(() => {
+        if (!user || (!user.progress && user.progress?.length === 0) || lessons.length === 0) return;
+
+        const newCompletedLessons = new Set(completedLessonIds);
+        const newCompletedQuizzes = new Set(completedQuizIds);
+        const newLessonProgressMap = { ...lessonProgressMap };
+        let updated = false;
+
+        user.progress.forEach(p => {
+            if (p.status === 'completed' || p.score >= 80) {
+                // Check if it's a lesson
+                const lesson = lessons.find(l => l.title === p.chapter);
+                if (lesson && !newCompletedLessons.has(lesson._id)) {
+                    newCompletedLessons.add(lesson._id);
+                    newLessonProgressMap[lesson._id] = Math.max(p.score || 100, newLessonProgressMap[lesson._id] || 0);
+                    updated = true;
+                }
+                
+                // Check if it's a quiz
+                const quiz = quizzes.find(q => q.title === p.chapter);
+                if (quiz && !newCompletedQuizzes.has(quiz._id)) {
+                    newCompletedQuizzes.add(quiz._id);
+                    updated = true;
+                }
+            } else if (p.score > 0) {
+                // In progress lesson
+                const lesson = lessons.find(l => l.title === p.chapter);
+                if (lesson) {
+                    newLessonProgressMap[lesson._id] = Math.max(p.score, newLessonProgressMap[lesson._id] || 0);
+                    updated = true;
+                }
+            }
+        });
+
+        if (updated) {
+            const lessonsArr = Array.from(newCompletedLessons);
+            const quizzesArr = Array.from(newCompletedQuizzes);
+            
+            setCompletedLessonIds(lessonsArr);
+            setCompletedQuizIds(quizzesArr);
+            setLessonProgressMap(newLessonProgressMap);
+
+            localStorage.setItem(`completedLessons_${user._id}`, JSON.stringify(lessonsArr));
+            localStorage.setItem(`completedQuizzes_${user._id}`, JSON.stringify(quizzesArr));
+            localStorage.setItem(`lessonProgressMap_${user._id}`, JSON.stringify(newLessonProgressMap));
+        }
+    }, [user, lessons, quizzes]);
+
     useEffect(() => {
         // Update streak on component mount
         updateStreak();
