@@ -10,7 +10,7 @@ const pingServer = async () => {
         const serverUrl = localStorage.getItem('serverUrl');
         const base = serverUrl || (Capacitor.isNativePlatform() ? '' : 'http://localhost:5001');
         if (!base) return navigator.onLine; // No server configured — use browser hint
-        const res = await fetch(`${base}/api/health`, { method: 'GET', cache: 'no-store', signal: AbortSignal.timeout(5000) });
+        const res = await fetch(`${base}/api/health`, { method: 'GET', cache: 'no-store', signal: AbortSignal.timeout(10000) });
         return res.ok;
     } catch {
         return false;
@@ -22,6 +22,9 @@ export function SyncProvider({ children }) {
     const [queueSize, setQueueSize] = useState(0);
     const [isSyncing, setIsSyncing] = useState(false);
     const [lastSynced, setLastSynced] = useState(null);
+
+    // Track consecutive failures to prevent flickering
+    const [pingFailCount, setPingFailCount] = useState(0);
 
     const checkQueue = async () => {
         try {
@@ -65,7 +68,20 @@ export function SyncProvider({ children }) {
 
         // Double-check with a real server ping if browser says online
         if (connected) {
-            connected = await pingServer();
+            const pingSuccess = await pingServer();
+            setPingFailCount(prev => {
+                if (pingSuccess) return 0;
+                
+                // Allow up to 1 failure without marking offline to avoid flicker
+                const newCount = prev + 1;
+                if (newCount < 2) {
+                    console.log(`[SyncProvider] Ping failed (${newCount}/2). Ignored for now.`);
+                    connected = true; // Override and keep online
+                } else {
+                    connected = false;
+                }
+                return newCount;
+            });
         }
 
         setIsOnline(prev => {
@@ -120,9 +136,9 @@ export function SyncProvider({ children }) {
             })();
         }
 
-        // Periodic health-check ping every 15 seconds — catches cases where
+        // Periodic health-check ping every 30 seconds — catches cases where
         // browser events and Capacitor events both miss the state change
-        const pingInterval = setInterval(checkNetwork, 15000);
+        const pingInterval = setInterval(checkNetwork, 30000);
 
         // Also check queue periodically
         const queueInterval = setInterval(checkQueue, 5000);
