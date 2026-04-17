@@ -1,6 +1,6 @@
 # Firebase Authentication Setup Guide
 
-This guide will help you set up Firebase Email Authentication for Vidya Sahayak.
+This guide will help you set up Firebase Email Authentication for Vidya Setu.
 
 ---
 
@@ -12,7 +12,7 @@ This guide will help you set up Firebase Email Authentication for Vidya Sahayak.
 
 2. **Create New Project**
    - Click "Add project" or "Create a project"
-   - Project name: `Vidya Sahayak` (or your preferred name)
+   - Project name: `Vidya Setu` (or your preferred name)
    - Enable Google Analytics (optional)
    - Click "Create project"
 
@@ -38,7 +38,7 @@ This guide will help you set up Firebase Email Authentication for Vidya Sahayak.
    - Go to Project Settings (gear icon ⚙️)
    - Scroll down to "Your apps"
    - Click the web icon `</>` (Add app)
-   - App nickname: `Vidya Sahayak Web`
+   - App nickname: `Vidya Setu Web`
    - Click "Register app"
 
 2. **Copy Firebase Config**

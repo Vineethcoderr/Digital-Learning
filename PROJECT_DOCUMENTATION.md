@@ -217,4 +217,4 @@ Device (Student)                    Service Worker / App              Cloud (Mon
 
 ---
 
-*Document generated for the Vidya Setu / Vidya Sahayak digital learning platform. For implementation details, see the `nabha/` specification files.*
+*Document generated for the Vidya Setu / Vidya Setu digital learning platform. For implementation details, see the `nabha/` specification files.*

@@ -18,7 +18,7 @@ Firebase is **OPTIONAL** and only needed if you want:
 1. Go to **[Firebase Console](https://console.firebase.google.com)**
 2. Sign in with your Google account
 3. Click **"Add project"** or **"Create a project"**
-4. Enter project name: `Vidya Sahayak`
+4. Enter project name: `Vidya Setu`
 5. Click **Continue**
 6. (Optional) Enable Google Analytics
 7. Click **Create project**
@@ -43,7 +43,7 @@ Firebase is **OPTIONAL** and only needed if you want:
 1. Click **Project Settings** (⚙️ gear icon) in left sidebar
 2. Scroll down to **"Your apps"** section
 3. Click the **</>** (Web) icon to register a web app
-4. App nickname: `Vidya Sahayak Backend`
+4. App nickname: `Vidya Setu Backend`
 5. Click **Register app**
 6. Scroll down to **"Firebase Admin SDK"** section
 7. Click **Generate new private key**

@@ -13,7 +13,7 @@ Resend is a modern email API that sends real emails for your OTP verification.
 1. **Go to Resend**: https://resend.com/api-keys
 2. **Sign up** with GitHub or email (free)
 3. **Click "Create API Key"**
-4. **Name it**: `Vidya Sahayak`
+4. **Name it**: `Vidya Setu`
 5. **Permission**: Full Access
 6. **Click "Create"**
 7. **Copy the API key** (starts with `re_`)
@@ -71,9 +71,9 @@ Check your inbox for the OTP email.
 Your OTP emails will look like this:
 
 ```
-Subject: Your Vidya Sahayak Verification OTP
+Subject: Your Vidya Setu Verification OTP
 
-🎓 Vidya Sahayak
+🎓 Vidya Setu
 
 Your verification code is:
 
@@ -82,7 +82,7 @@ Your verification code is:
 This code expires in 5 minutes.
 Do not share it with anyone.
 
-Vidya Sahayak · Digital Learning Platform
+Vidya Setu · Digital Learning Platform
 ```
 
 With a beautiful purple gradient design and large OTP code display.

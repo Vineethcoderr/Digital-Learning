@@ -26,7 +26,7 @@ The backend is configured to send OTP emails using **Nodemailer + Gmail SMTP**:
 2. If prompted, sign in again
 3. Under "App passwords":
    - Select app: **Mail**
-   - Select device: **Other (Custom name)** → Enter "Vidya Sahayak"
+   - Select device: **Other (Custom name)** → Enter "Vidya Setu"
 4. Click **Generate**
 5. Copy the 16-character password (e.g., `abcd efgh ijkl mnop`)
 
@@ -39,7 +39,7 @@ Open `backend/.env` and update:
 ```env
 EMAIL_USER=sanjaysamala4100@gmail.com
 EMAIL_PASS=abcdefghijklmnop  # Your 16-char app password (no spaces)
-EMAIL_FROM=Vidya Sahayak <sanjaysamala4100@gmail.com>
+EMAIL_FROM=Vidya Setu <sanjaysamala4100@gmail.com>
 ```
 
 > 📝 **Note**: Remove spaces from the app password when adding to `.env`
@@ -68,9 +68,9 @@ You should see:
 5. Check email inbox - you'll receive:
 
 ```
-Subject: Your Vidya Sahayak Verification OTP
+Subject: Your Vidya Setu Verification OTP
 
-🎓 Vidya Sahayak
+🎓 Vidya Setu
 Your verification code is:
 
 123456

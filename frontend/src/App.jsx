@@ -15,29 +15,30 @@ function App() {
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
-      const userData = JSON.parse(userInfo);
-      // Fetch fresh profile data from database
-      fetch(`${API}/users/profile/${userData._id}`)
-        .then(r => r.json())
-        .then((profileData) => {
-          if (profileData) {
-            // Merge with existing data and update
-            const updatedUser = { ...userData, ...profileData };
-            localStorage.setItem('userInfo', JSON.stringify(updatedUser));
-            setUser(updatedUser);
-          } else {
-            setUser(userData);
-          }
-          setIsLoading(false);
-        })
-        .catch(() => {
-          // If fetch fails, use cached data
+      try {
+        const userData = JSON.parse(userInfo);
+        if (userData && userData._id) {
+          // Set cached data first
           setUser(userData);
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
+          
+          // Then try to refresh in background
+          fetch(`${API}/users/profile/${userData._id}`)
+            .then(r => r.json())
+            .then((profileData) => {
+              if (profileData && !profileData.message) {
+                const updatedUser = { ...userData, ...profileData };
+                localStorage.setItem('userInfo', JSON.stringify(updatedUser));
+                setUser(updatedUser);
+              }
+            })
+            .catch(() => console.warn('[App] Background profile refresh failed'));
+        }
+      } catch (err) {
+        console.error('[App] Failed to parse userInfo', err);
+        localStorage.removeItem('userInfo');
+      }
     }
+    setIsLoading(false);
   }, []);
 
   const handleLogout = () => {
@@ -51,7 +52,7 @@ function App() {
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 bg-indigo-600 rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4 animate-pulse">🎓</div>
-          <p className="text-white font-bold text-lg">Loading...</p>
+          <p className="text-white font-bold text-lg">Initializing...</p>
         </div>
       </div>
     );
@@ -60,22 +61,21 @@ function App() {
   // If not logged in, show Login Screen
   if (!user) {
     return <Login onLogin={(data) => {
-      // Fetch fresh profile data on login
+      // Set user immediately to transition away from login screen
+      setUser(data);
+      
+      // Fetch fresh profile data in background
       if (data._id) {
         fetch(`${API}/users/profile/${data._id}`)
           .then(r => r.json())
           .then((profileData) => {
-            if (profileData) {
+            if (profileData && !profileData.message) {
               const updatedUser = { ...data, ...profileData };
               localStorage.setItem('userInfo', JSON.stringify(updatedUser));
               setUser(updatedUser);
-            } else {
-              setUser(data);
             }
           })
-          .catch(() => setUser(data));
-      } else {
-        setUser(data);
+          .catch(() => console.warn('[App] Background profile fetch failed'));
       }
     }} />;
   }
@@ -95,7 +95,13 @@ function App() {
       </button>
 
       {/* Main View */}
-      {isAdmin ? <AdminPanel user={user} /> : isStudent ? <StudentPortal user={user} /> : <TeacherDashboard user={user} />}
+      {isAdmin ? (
+        <AdminPanel user={user} />
+      ) : isStudent ? (
+        <StudentPortal user={user} />
+      ) : (
+        <TeacherDashboard user={user} />
+      )}
     </div>
   );
 }

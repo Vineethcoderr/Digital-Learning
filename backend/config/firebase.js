@@ -76,12 +76,12 @@ const sendFirebaseEmailOTP = async (email) => {
         if (emailTransporter) {
             // Fire and forget so we don't block the frontend with SMTP timeouts!
             emailTransporter.sendMail({
-                from: `"Vidya Sahayak" <${process.env.EMAIL_USER}>`,
+                from: `"Vidya Setu" <${process.env.EMAIL_USER}>`,
                 to: email,
-                subject: 'Your Vidya Sahayak Verification OTP',
+                subject: 'Your Vidya Setu Verification OTP',
                 html: `
                     <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; color: #fff;">
-                        <h2 style="text-align: center; color: #fff; margin-bottom: 8px;">🎓 Vidya Sahayak</h2>
+                        <h2 style="text-align: center; color: #fff; margin-bottom: 8px;">🎓 Vidya Setu</h2>
                         <p style="text-align: center; color: #e0e7ff; margin-bottom: 24px;">Your verification code is:</p>
                         <div style="text-align: center; font-size: 42px; font-weight: bold; letter-spacing: 12px; color: #34d399; padding: 24px; background: rgba(255,255,255,0.1); border-radius: 12px; margin: 16px 0;">
                             ${otpCode}
@@ -89,7 +89,7 @@ const sendFirebaseEmailOTP = async (email) => {
                         <p style="text-align: center; color: #a5b4fc; font-size: 14px; margin-top: 24px;">This code expires in 5 minutes.</p>
                         <p style="text-align: center; color: #94a3b8; font-size: 13px; margin-top: 8px;">Do not share it with anyone.</p>
                         <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
-                        <p style="text-align: center; color: #64748b; font-size: 12px;">Vidya Sahayak · Digital Learning Platform</p>
+                        <p style="text-align: center; color: #64748b; font-size: 12px;">Vidya Setu · Digital Learning Platform</p>
                     </div>
                 `,
             }).then(info => {
@@ -104,13 +104,13 @@ const sendFirebaseEmailOTP = async (email) => {
                 method: 'email-async'
             };
         }
-        
+
         // Fallback: Show in console
         console.log(`\n[OTP for ${email}]`);
         console.log(`┌────────────────────────────┐`);
         console.log(`│  OTP: ${otpCode}              │`);
         console.log(`└────────────────────────────┘`);
-        
+
         return {
             success: true,
             otp: otpCode,

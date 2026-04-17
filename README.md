@@ -1,8 +1,8 @@
-# Vidya Sahayak - Digital Learning Platform
+# Vidya Setu - Digital Learning Platform
 
 <div align="center">
 
-![Vidya Sahayak](https://img.shields.io/badge/Vidya_Sahayak-Digital_Learning-blue)
+![Vidya Setu](https://img.shields.io/badge/Vidya_Sahayak-Digital_Learning-blue)
 ![React](https://img.shields.io/badge/React-18.3.1-61dafb)
 ![Node.js](https://img.shields.io/badge/Node.js-23.2.0-339933)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248)
@@ -16,7 +16,7 @@
 
 ## 📖 About
 
-**Vidya Sahayak** (विद्या सहायक / ਵਿਦਿਆ ਸਹਾਇਕ) is a comprehensive digital learning platform specifically designed for rural students in Punjab (e.g., Nabha). Built with a **mobile-first, offline-first** approach, it ensures high-quality educational content is accessible even on low-end devices with limited connectivity.
+**Vidya Setu** (विद्या सहायक / ਵਿਦਿਆ ਸਹਾਇਕ) is a comprehensive digital learning platform specifically designed for rural students in Punjab (e.g., Nabha). Built with a **mobile-first, offline-first** approach, it ensures high-quality educational content is accessible even on low-end devices with limited connectivity.
 
 ### 🎯 Key Features
 
@@ -134,7 +134,7 @@ Frontend will run on **http://localhost:5173**
 
 ```env
 # Database Configuration
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/vidya-sahayak
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/Vidya Setu
 
 # JWT Secret (generate a strong random string)
 JWT_SECRET=your_super_secret_jwt_key_change_this
@@ -177,7 +177,7 @@ VITE_API_URL=http://localhost:5000/api
 VITE_SOCKET_URL=http://localhost:5000
 
 # App Configuration
-VITE_APP_NAME=Vidya Sahayak
+VITE_APP_NAME=Vidya Setu
 ```
 
 > ⚠️ **Security Note**: Never commit `.env` files to version control. They are excluded via `.gitignore`.
@@ -446,6 +446,6 @@ Matrusri Engineering College, Team 3
 
 **Built with ❤️ for rural education in India**
 
-🌐 **Vidya Sahayak** - Bridging the digital divide in education
+🌐 **Vidya Setu** - Bridging the digital divide in education
 
 </div>

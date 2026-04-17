@@ -119,7 +119,7 @@ export default function StudentPortal({ user }) {
 
     // Hydrate local progress state from authenticated user's backend profile
     useEffect(() => {
-        if (!user || (!user.progress && user.progress?.length === 0) || lessons.length === 0) return;
+        if (!user || !user.progress || !Array.isArray(user.progress) || lessons.length === 0) return;
 
         const newCompletedLessons = new Set(completedLessonIds);
         const newCompletedQuizzes = new Set(completedQuizIds);

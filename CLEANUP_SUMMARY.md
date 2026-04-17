@@ -91,7 +91,7 @@ Your app **works without Firebase** using backend OTP + MongoDB.
 
 **Steps:**
 1. Go to https://console.firebase.google.com
-2. Create project: "Vidya Sahayak"
+2. Create project: "Vidya Setu"
 3. Enable Authentication → Email/Password
 4. Generate service account key (Project Settings → Service Accounts)
 5. Update `/backend/.env`:
